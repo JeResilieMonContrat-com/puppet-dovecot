@@ -75,6 +75,7 @@ class dovecot (
     $ssl_cipher_list            = undef,
     $ssl_protocols              = undef,
     $ssl_dh_parameters_length   = undef,
+    $ssl_dh                     = '/usr/share/dovecot/dh.pem',
     # 15-lda.conf
     $postmaster_address         = undef,
     $hostname                   = undef,

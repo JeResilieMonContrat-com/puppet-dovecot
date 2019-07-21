@@ -40,6 +40,12 @@ ssl_key = <<%= @ssl_key %>
 # auth_ssl_username_from_cert=yes.
 #ssl_cert_username_field = commonName
 
+# SSL DH parameters
+# Generate new params with `openssl dhparam -out /etc/dovecot/dh.pem 4096`
+# Or migrate from old ssl-parameters.dat file with the command dovecot
+# gives on startup when ssl_dh is unset.
+ssl_dh = <<%= @ssl_dh %>
+
 # How often to regenerate the SSL parameters file. Generation is quite CPU
 # intensive operation. The value is in hours, 0 disables regeneration
 # entirely.
