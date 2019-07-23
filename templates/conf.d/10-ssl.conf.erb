@@ -26,7 +26,7 @@ ssl_key = <<%= @ssl_key %>
 # PEM encoded trusted certificate authority. Set this only if you intend to use
 # ssl_verify_client_cert=yes. The file should contain the CA certificate(s)
 # followed by the matching CRL(s). (e.g. ssl_ca = </etc/ssl/certs/ca.pem)
-#ssl_ca = 
+#ssl_ca =
 
 # Require that CRL check succeeds for client certificates.
 #ssl_require_crl = yes
@@ -44,7 +44,9 @@ ssl_key = <<%= @ssl_key %>
 # Generate new params with `openssl dhparam -out /etc/dovecot/dh.pem 4096`
 # Or migrate from old ssl-parameters.dat file with the command dovecot
 # gives on startup when ssl_dh is unset.
+<% if @ssl_dh -%>
 ssl_dh = <<%= @ssl_dh %>
+<% end -%>
 
 # How often to regenerate the SSL parameters file. Generation is quite CPU
 # intensive operation. The value is in hours, 0 disables regeneration
