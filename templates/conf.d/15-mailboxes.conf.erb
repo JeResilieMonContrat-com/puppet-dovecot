@@ -21,9 +21,15 @@ namespace inbox {
   }
   mailbox Junk {
     special_use = \Junk
+    <% if @junk_mailbox_expunge_days -%>
+    autoexpunge = <%= @junk_mailbox_expunge_days %>
+    <% end -%>
   }
   mailbox Trash {
     special_use = \Trash
+    <% if @trash_mailbox_expunge_days -%>
+    autoexpunge = <%= @trash_mailbox_expunge_days %>
+    <% end -%>
   }
 
   # For \Sent mailboxes there are two widely used names. We'll mark both of

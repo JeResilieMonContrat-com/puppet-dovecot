@@ -83,6 +83,9 @@ class dovecot (
     $lda_mail_location          = undef,
     $lda_mailbox_autocreate     = undef,
     $lda_mailbox_autosubscribe  = undef,
+    # 15-mailboxes.conf.erb
+    $trash_mailbox_expunge_days = undef,
+    $junk_mailbox_expunge_days  = undef,
     # 20-imap.conf
     $imap_mail_plugins          = undef,
     $imap_client_workarounds    = undef,
