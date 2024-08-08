@@ -150,7 +150,7 @@ class dovecot (
     }
 
     if $custom_packages == undef {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'RedHat', 'CentOS': {
             $packages = ['dovecot','dovecot-pigeonhole']
         }
@@ -160,18 +160,18 @@ class dovecot (
         'FreeBSD' : {
           $packages  = 'mail/dovecot2'
         }
-        default: { fail("OS $::operatingsystem and version $::operatingsystemrelease is not supported.")
+        default: { fail("OS $facts['os']['name'] and version $facts['os']['name']release is not supported.")
         }
       }
     } else {
       $packages = $custom_packages
     }
 
-    case $::operatingsystem {
-    'RedHat', 'CentOS': { 
+    case $facts['os']['name'] {
+    'RedHat', 'CentOS': {
         $directory = '/etc/dovecot'
         $prefix    = 'dovecot'
-    } 
+    }
     /^(Debian|Ubuntu)$/:{
         $directory = '/etc/dovecot'
         $prefix    = 'dovecot'
@@ -180,7 +180,7 @@ class dovecot (
         $directory = '/usr/local/etc/dovecot'
         $prefix    = 'mail/dovecot2'
     }
-    default: { fail("OS $::operatingsystem and version $::operatingsystemrelease is not supported") }
+    default: { fail("OS $facts['os']['name'] and version $facts['os']['name']release is not supported") }
     }
 
     # All files in this scope are dovecot configuration files
@@ -260,13 +260,13 @@ class dovecot (
     file { "${directory}/conf.d/20-pop3.conf":
         content => template('dovecot/conf.d/20-pop3.conf.erb'),
     }
-    
+
     if $manage_sieve {
       file { "${directory}/conf.d/20-managesieve.conf":
           content => template('dovecot/conf.d/20-managesieve.conf.erb'),
       }
     }
-    
+
     file { "${directory}/conf.d/90-sieve.conf":
         content => template('dovecot/conf.d/90-sieve.conf.erb'),
     }

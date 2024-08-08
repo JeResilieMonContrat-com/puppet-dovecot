@@ -14,7 +14,7 @@ define dovecot::file (
     $content = undef,
     $source  = undef
 ) {
-    case $::operatingsystem {
+    case $facts['os']['name'] {
       'FreeBSD': { $directory = '/usr/local/etc/dovecot' }
       default:   { $directory = '/etc/dovecot' }
     }
