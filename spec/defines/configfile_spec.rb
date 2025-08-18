@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'dovecot::configfile' do
@@ -10,7 +12,7 @@ describe 'dovecot::configfile' do
 
     context 'it uses concat' do
       it {
-        is_expected.to contain_concat(params[:path] + '/' + params[:filename])
+        is_expected.to contain_concat("#{params[:path]}/#{params[:filename]}")
           .with_owner(params[:owner])
           .with_group(params[:group])
           .with_mode(params[:mode])
@@ -23,13 +25,13 @@ describe 'dovecot::configfile' do
     context 'it contains dovecot::config' do
       it {
         is_expected.to contain_dovecot__config(params[:filename])
-          .with_file(params[:path] + '/' + params[:filename])
+          .with_file("#{params[:path]}/#{params[:filename]}")
       }
     end
 
     context 'it includes not include_in fragment' do
       it {
-        is_expected.not_to contain_concat_fragment('dovecot: include ' + params[:filename] + ' in ')
+        is_expected.not_to contain_concat_fragment("dovecot: include #{params[:filename]} in ")
       }
     end
   end
@@ -118,7 +120,7 @@ describe 'dovecot::configfile' do
 
         context 'it includes concat_fragment' do
           it {
-            is_expected.to contain_concat_fragment('dovecot: include ' + title + ' in ' + params[:include_in])
+            is_expected.to contain_concat_fragment("dovecot: include #{title} in #{params[:include_in]}")
               .with_target(params[:include_in])
               .with_order('01')
               .with_content(%r{!include })

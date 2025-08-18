@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 require 'spec_helper'
 
@@ -20,7 +20,7 @@ describe 'dovecot' do
     it { is_expected.to compile.with_all_deps }
 
     it {
-      is_expected.to contain_file(params[:config_path] + '/' + params[:local_configdir])
+      is_expected.to contain_file("#{params[:config_path]}/#{params[:local_configdir]}")
         .with_ensure('directory')
         .with_owner(params[:owner])
         .with_group(params[:group])
@@ -29,7 +29,7 @@ describe 'dovecot' do
 
     it {
       is_expected.to contain_concat__fragment('dovecot: include system defaults')
-        .with_target(params[:config_path] + '/' + params[:main_config_file])
+        .with_target("#{params[:config_path]}/#{params[:main_config_file]}")
         .with_content('!include conf.d/*')
         .with_order('00')
     }
@@ -71,7 +71,7 @@ describe 'dovecot' do
           default_params.merge(
             owner: 'toor',
             group: 'toor',
-            mode: '4460',
+            mode: '4460'
           )
         end
 
@@ -81,7 +81,7 @@ describe 'dovecot' do
       context 'with different local_configdir' do
         let :params do
           default_params.merge(
-            local_configdir: 'local.d',
+            local_configdir: 'local.d'
           )
         end
 
@@ -91,7 +91,7 @@ describe 'dovecot' do
       context 'with different configpath' do
         let :params do
           default_params.merge(
-            config_path: '/somewhere',
+            config_path: '/somewhere'
           )
         end
 
@@ -101,7 +101,7 @@ describe 'dovecot' do
       context 'with different configfile' do
         let :params do
           default_params.merge(
-            main_config_file: 'anotherdovecot.conf',
+            main_config_file: 'anotherdovecot.conf'
           )
         end
 
@@ -111,7 +111,7 @@ describe 'dovecot' do
       context 'with main config values' do
         let :params do
           default_params.merge(
-            main_config: { 'values' => { 'val' => 'myval' } },
+            main_config: { 'values' => { 'val' => 'myval' } }
           )
         end
 
@@ -127,7 +127,7 @@ describe 'dovecot' do
       context 'with main config sections' do
         let :params do
           default_params.merge(
-            main_config: { 'sections' => [{ 'name' => 'service auth' }] },
+            main_config: { 'sections' => [{ 'name' => 'service auth' }] }
           )
         end
 
@@ -143,7 +143,7 @@ describe 'dovecot' do
       context 'with local configs' do
         let :params do
           default_params.merge(
-            configs: { 'myconfig' => { 'values' => { 'blah' => 'fasel' } } },
+            configs: { 'myconfig' => { 'values' => { 'blah' => 'fasel' } } }
           )
         end
 
@@ -151,29 +151,29 @@ describe 'dovecot' do
 
         it {
           is_expected.to contain_dovecot__configfile('myconfig')
-            .with_path(params[:config_path] + '/' + params[:local_configdir])
+            .with_path("#{params[:config_path]}/#{params[:local_configdir]}")
             .with_local_configdir(params[:local_configdir])
             .with_owner(params[:owner])
             .with_group(params[:group])
             .with_mode(params[:mode])
-            .with_include_in(params[:config_path] + '/' + params[:main_config_file])
+            .with_include_in("#{params[:config_path]}/#{params[:main_config_file]}")
         }
       end
 
-      context 'without including system defaults ' do
+      context 'without including system defaults' do
         let :params do
           default_params.merge(
-            include_sysdefault: false,
+            include_sysdefault: false
           )
         end
 
         it { is_expected.not_to contain_concat__fragment('dovecot: include system defaults') }
       end
 
-      context 'without with additional resources to create ' do
+      context 'without with additional resources to create' do
         let :params do
           default_params.merge(
-            create_resources: { 'file' => { '/tmp/blah' => { 'ensure' => 'directory' } } },
+            create_resources: { 'file' => { '/tmp/blah' => { 'ensure' => 'directory' } } }
           )
         end
 

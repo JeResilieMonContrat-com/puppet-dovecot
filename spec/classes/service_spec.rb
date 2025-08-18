@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require 'spec_helper'
 
@@ -36,7 +37,7 @@ describe 'dovecot::service' do
           default_params.merge(
             ensure: 'stopped',
             enable: false,
-            service_name: 'tocevod',
+            service_name: 'tocevod'
           )
         end
 

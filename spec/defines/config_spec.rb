@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'dovecot::config' do
@@ -8,9 +10,9 @@ describe 'dovecot::config' do
 
     context 'it includes concat_fragment' do
       it {
-        is_expected.to contain_concat_fragment('dovecot: ' + params[:file] + ' ' + params[:recursion] + ' vals')
+        is_expected.to contain_concat_fragment("dovecot: #{params[:file]} #{params[:recursion]} vals")
           .with_target(params[:file])
-          .with_order('50-' + params[:recursion] + '-0')
+          .with_order("50-#{params[:recursion]}-0")
       }
     end
   end
@@ -55,29 +57,30 @@ describe 'dovecot::config' do
         it_behaves_like 'dovecot::config shared examples'
 
         it {
-          is_expected.to contain_concat_fragment('dovecot: ' + params[:file] + ' ' + params[:recursion] + ' vals')
+          is_expected.to contain_concat_fragment("dovecot: #{params[:file]} #{params[:recursion]} vals")
             .with_content(%r{^  valname = value$})
         }
 
         context 'it includes section fragments' do
           it {
-            is_expected.to contain_concat_fragment('dovecot: ' + params[:file] + ' ' + params[:recursion] + ' 0 start')
+            is_expected.to contain_concat_fragment("dovecot: #{params[:file]} #{params[:recursion]} 0 start")
               .with_target(params[:file])
-              .with_order('50-' + params[:recursion] + '-0-a')
+              .with_order("50-#{params[:recursion]}-0-a")
           }
+
           it {
-            is_expected.to contain_concat_fragment('dovecot: ' + params[:file] + ' ' + params[:recursion] + ' 0 end')
+            is_expected.to contain_concat_fragment("dovecot: #{params[:file]} #{params[:recursion]} 0 end")
               .with_target(params[:file])
-              .with_order('50-' + params[:recursion] + '-0-c')
+              .with_order("50-#{params[:recursion]}-0-c")
               .with_content('  }')
           }
         end
 
         context 'it does recursion' do
           it {
-            is_expected.to contain_dovecot__config(params[:file] + ' ' + params[:recursion] + '_2_0')
+            is_expected.to contain_dovecot__config("#{params[:file]} #{params[:recursion]}_2_0")
               .with_file(params[:file])
-              .with_recursion(params[:recursion] + '-0-b')
+              .with_recursion("#{params[:recursion]}-0-b")
               .with_trim('4')
               .with_values('{}')
               .with_sections('[]')
@@ -98,29 +101,30 @@ describe 'dovecot::config' do
         it_behaves_like 'dovecot::config shared examples'
 
         it {
-          is_expected.to contain_concat_fragment('dovecot: ' + params[:file] + ' ' + params[:recursion] + ' vals')
+          is_expected.to contain_concat_fragment("dovecot: #{params[:file]} #{params[:recursion]} vals")
             .with_content(%r{^valname = value$})
         }
 
         context 'it includes section fragments' do
           it {
-            is_expected.to contain_concat_fragment('dovecot: ' + params[:file] + ' ' + params[:recursion] + ' 0 start')
+            is_expected.to contain_concat_fragment("dovecot: #{params[:file]} #{params[:recursion]} 0 start")
               .with_target(params[:file])
-              .with_order('50-' + params[:recursion] + '-0-a')
+              .with_order("50-#{params[:recursion]}-0-a")
           }
+
           it {
-            is_expected.to contain_concat_fragment('dovecot: ' + params[:file] + ' ' + params[:recursion] + ' 0 end')
+            is_expected.to contain_concat_fragment("dovecot: #{params[:file]} #{params[:recursion]} 0 end")
               .with_target(params[:file])
-              .with_order('50-' + params[:recursion] + '-0-c')
+              .with_order("50-#{params[:recursion]}-0-c")
               .with_content('}')
           }
         end
 
         context 'it does recursion' do
           it {
-            is_expected.to contain_dovecot__config(params[:file] + ' ' + params[:recursion] + '_2_0')
+            is_expected.to contain_dovecot__config("#{params[:file]} #{params[:recursion]}_2_0")
               .with_file(params[:file])
-              .with_recursion(params[:recursion] + '-0-b')
+              .with_recursion("#{params[:recursion]}-0-b")
               .with_trim('2')
               .with_values('{}')
               .with_sections('[]')

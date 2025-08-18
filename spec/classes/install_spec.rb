@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 require 'spec_helper'
 
@@ -10,6 +10,7 @@ describe 'dovecot::install' do
 
   shared_examples 'dovecot::install shared examples' do
     it { is_expected.to compile.with_all_deps }
+
     it {
       params[:packages].each do |ipackage|
         is_expected.to contain_package(ipackage)
@@ -19,6 +20,7 @@ describe 'dovecot::install' do
       end
     }
   end
+
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
@@ -31,11 +33,11 @@ describe 'dovecot::install' do
         it_behaves_like 'dovecot::install shared examples'
       end
 
-      context 'with non  defaults' do
+      context 'with non defaults' do
         let :params do
           default_params.merge(
-            packages: ['dovecot-whatever', 'andanother-dovecot'],
-            package_ensure: 'latest',
+            packages: %w[dovecot-whatever andanother-dovecot],
+            package_ensure: 'latest'
           )
         end
 
