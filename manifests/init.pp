@@ -3,7 +3,7 @@
 #
 # Parameters:
 # @param main_config
-#   Hash of configurations to include in the main 
+#   Hash of configurations to include in the main
 #   configuration file.
 #   Defaults to {}
 # @param configs
@@ -24,7 +24,7 @@
 #   mode of the configuration files
 # @param include_sysdefault = true,
 #   if true (the default) an include statement
-#   in the main configuration file is added to 
+#   in the main configuration file is added to
 #   include the system defaults before the local
 #   configuration.
 # @param create_resources
@@ -55,6 +55,7 @@ class dovecot (
   String  $owner              = 'root',
   String  $group              = 'root',
   String  $mode               = '0644',
+  Boolean $purge              = false,
   Boolean $include_sysdefault = true,
   Hash    $create_resources   = {},
 ) {
@@ -65,6 +66,8 @@ class dovecot (
     owner   => $owner,
     group   => $group,
     mode    => '0755',
+    purge   => $purge,
+    recurse => $purge,
     require => Class['dovecot::install'],
   }
 
